@@ -1,5 +1,5 @@
 use native_tls::TlsConnector;
-use serde_json::Value
+use serde_json::Value;
 
 use std::net::TcpStream;
 
@@ -15,8 +15,8 @@ fn main() {
         let msg = ws.read_message().unwrap();
         if msg.is_text() {
             println!("{}", msg);
-            let data: Value = serde_json::from_str(&msg.as_str());
-            if data["type"] == 554: {
+            let data: Value = serde_json::from_str(&msg.to_text().unwrap()).unwrap();
+            if data["type"] == 554 {
                 println!("{}", data["data"]);
             }
         }
